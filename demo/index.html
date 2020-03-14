@@ -6,33 +6,34 @@
     <title>RiotControl Demo</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="todo.css">
+    <script src="js/riot+compiler.min.js"></script>
+    <script src="js/observable.js"></script>
 
     <!--[if lt IE 9]>
     <script src="js/es5-shim.js"></script>
     <script src="js/html5-shiv.js"></script>
     <script>html5.addElements('todoapp')</script>
     <![endif]-->
-
   </head>
 
   <body>
-
     <todoapp></todoapp>
 
-    <a href="https://github.com/jimsparkman/RiotControl">View on GitHub</a>
+    <a href="https://github.com/kkeeth/riot-control">View on GitHub</a>
 
-    <script src="js/riot.js"></script>
     <script src="riotcontrol.js"></script>
     <script src="todostore.js"></script>
-    <script src="todo.js"></script>
-    <script src="todoapp.js"></script>
+    <script src="components/todo.riot" type="riot"></script>
+    <script src="components/todoapp.riot" type="riot"></script>
 
     <script>
-      var todoStore = new TodoStore() // Create a store instance.
-      RiotControl.addStore(todoStore) // Register the store in central dispatch.
-      riot.mount('todoapp') // Kickoff the Riot app.
+      riot
+        .compile()
+        .then(() => {
+          const todoStore = new TodoStore() // Create a store instance.
+          RiotControl.addStore(todoStore) // Register the store in central dispatch.
+          riot.mount('todoapp') // Kickoff the Riot app.
+        })
     </script>
-
   </body>
-
 </html>
