@@ -111,3 +111,11 @@ Same as RiotControl.on(), executes once.
 ```javascript
 RiotControl.one(event, callback)
 ```
+
+## License
+
+[MIT](https://github.com/kkeeth/riot-control/blob/master/LICENSE)
+
+## Others
+
+I'm waiting for you at any time, including code reviews, bug reports, feature additions, questions and more!
