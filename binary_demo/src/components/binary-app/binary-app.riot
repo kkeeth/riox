@@ -1,0 +1,52 @@
+<binary-app>
+	<h3>Binary Calculator</h3>
+	<span>Enter hex:</span>
+	<br/>
+	<span>0x</span>
+	<input name="input" onkeyup={ hexChanged } />
+	<span each={ bit in state.bitlist }>
+		{ bit.value }
+	</span>
+	<br/>
+	<div>
+		<div class="bit" each={ bit in state.bitlist } onclick={ toggle }>
+			<span>{ bit.pos }</span>
+			<input type="checkbox" checked={ !!bit.value } />
+		</div>
+	</div>
+
+	<script>
+		import CalcStore from '../../libs/calcstore'
+    import RiotControl from 'riotcontrol'
+
+	  export default {
+			state: {
+				bitlist: []
+			},
+      onBeforeMount(props, state) {
+				const calcStore = new CalcStore()
+				RiotControl.addStore(calcStore)
+
+				RiotControl.on('binary_changed', (bitlist) => {
+					console.log(bitlist)
+					this.update({
+						bitlist: bitlist
+					})
+				})
+
+				RiotControl.on('hex_forced_change', (hexVal) => {
+					this.input.value = hexVal.toUpperCase()
+					RiotControl.trigger('hex_changed', this.input.value)
+				})
+			},
+			hexChanged(e) {
+				e.target.value = e.target.value.toUpperCase()
+				RiotControl.trigger('hex_changed', e.target.value)
+			},
+			toggle(e) {
+				console.log(e)
+				RiotControl.trigger('bit_changed', e.item.pos)
+			}
+		}
+	</script>
+</binary-app>
