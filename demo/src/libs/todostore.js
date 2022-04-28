@@ -1,5 +1,5 @@
 import observable from '@riotjs/observable'
-import { install } from 'riot'
+
 // TodoStore definition.
 // Flux stores house application logic and state that relate to a specific domain.
 // In this case, a list of todo items.
@@ -34,9 +34,4 @@ function TodoStore() {
   // The store emits change events to any listening views, so that they may react and redraw themselves.
 }
 
-install((componentAPI) => {
-  const component = observable(componentAPI)
-
-  component.store = new TodoStore()
-  return component
-})
+export default TodoStore

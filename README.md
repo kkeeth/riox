@@ -1,20 +1,17 @@
 # 🚧 This repo is currently being updated 🚧
+
 # riot-control
+
 ============
 
-__UPDATE:__ Experimental multi-threaded version under [dev branch](https://github.com/kkeeth/riot-control/tree/dev).
-
-```bash
-$ npm install riot-control
-```
+**ASSUMPTION:** This repository is a sample of [this repository](https://github.com/jimsparkman/RiotControl) tested with RiotJS v6.
 
 A Simplistic Central Event Controller / Dispatcher For [RiotJS](https://github.com/riot/riot), Inspired By Facebook's [Flux](https://github.com/facebook/flux) Architecture Pattern.
 In addition, this library supports [riot-control](https://github.com/kkeeth/riot-control) for [version4](https://riot.js.org/).
 
 riot-control is, in the spirit of Riot itself, extremely lightweight. It forgoes elements of Flux, to favor small and simple applications. riot-control passes events from views to stores, and back, relying heavily on [Riot's observerable API](https://github.com/riot/observable). Stores can talk to many views, and views can talk to many stores.
 
-Example data flow
--------
+## Example data flow
 
 Given the following:
 
@@ -33,8 +30,7 @@ Possible data flow:
 
 This encourages loosely coupled components. Stores house application logic and domain-specific data. Views comprise the user interface. Either side can be swapped out without interfering with the other. For example, a store that saves to local storage can be easily swapped for one that saves to a back-end service instead.
 
-Demos
-============
+# Demos
 
 [TodoList](http://kkeeth.github.io/riot-control/demo/)
 
@@ -46,8 +42,7 @@ Reference routing_demo/index.html, itemstore.js, and item-app.tag
 
 [Binary Calculator](http://kkeeth.github.io/riot-control/binary_demo/)
 
-Things People Have Built
-============
+# Things People Have Built
 
 [Flux Catalog](https://github.com/txchen/feplay/tree/gh-pages/riot_flux)
 
@@ -57,27 +52,37 @@ RiotJS version of the flux-comparison catalog.
 
 Map of all movies in a given location.
 
-Usage
-============
+# Usage
 
-Requires Riot 2.0+
+Requires Riot 6.0+
 
 Include riotcontrol.js, or it's few lines of code, in your project.
 
-API
-============
+```bash
+$ npm install riot-control
+```
+
+# API
 
 Register the store in central dispatch, where store is a `observable()`. Generally, all stores should be created and registered before the Riot app is mounted.
 
 ```javascript
+// Base usage
 RiotControl.addStore(store)
 
-// Example, at start of application:
-var todoStore = new TodoStore() // Create a store instance.
-RiotControl.addStore(todoStore) // Register the store in central dispatch.
+// Example, at start of any components:
+import MyStore from './path/to/store/dir/my-store'
+import RiotControl from 'riotcontrol'
+
+onBeforeMount(props, state) {
+  // Create store instance
+  const myStore = new MyStore()
+  // Register the store in central dispatch.
+  RiotControl.addStore(myStore)
+}
 ```
 
-Trigger event on all stores registered in central dispatch. Essentially, a 'broadcast' version of Riot's el.trigger() API.
+Trigger event on all stores registered in central dispatch. Essentially, a 'broadcast' version of Riot's `el.trigger()` API.
 
 ```javascript
 RiotControl.trigger(event)
@@ -94,8 +99,8 @@ RiotControl.on(event, callback)
 
 // Example, inside Riot view (tag):
 RiotControl.on('todos_changed', (items) => {
-    self.items = items
-    self.update()
+  self.items = items
+  self.update()
 })
 ```
 

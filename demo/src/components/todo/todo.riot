@@ -22,7 +22,8 @@
   <button disabled={ !state.items.length } onclick={ remove } class="danger">Remove</button>
 
   <script>
-    import RiotControl from '../../libs/riotcontrol'
+    import TodoStore from '../../libs/todostore'
+    import RiotControl from 'riotcontrol'
 
     export default {
       state: {
@@ -31,8 +32,10 @@
         text: ""
       },
       onBeforeMount(props, state) {
+        // Create store instance
+        const todoStore = new TodoStore()
         // Register the store in central dispatch.
-        RiotControl.addStore(this.store)
+        RiotControl.addStore(todoStore)
         // Register a listener for store change events.
         RiotControl.on('todos_changed', (items) => {
           this.update({
