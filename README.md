@@ -10,7 +10,7 @@ $ npm install riot-control
 A Simplistic Central Event Controller / Dispatcher For [RiotJS](https://github.com/riot/riot), Inspired By Facebook's [Flux](https://github.com/facebook/flux) Architecture Pattern.
 In addition, this library supports [riot-control](https://github.com/kkeeth/riot-control) for [version4](https://riot.js.org/).
 
-riot-control is, in the spirit of Riot itself, extremely lightweight. It forgoes elements of Flux, to favor small and simple applications. riot-control passes events from views to stores, and back, relying heavily on Riot's observerable API. Stores can talk to many views, and views can talk to many stores.
+riot-control is, in the spirit of Riot itself, extremely lightweight. It forgoes elements of Flux, to favor small and simple applications. riot-control passes events from views to stores, and back, relying heavily on [Riot's observerable API](https://github.com/riot/observable). Stores can talk to many views, and views can talk to many stores.
 
 Example data flow
 -------
@@ -66,14 +66,14 @@ Include riotcontrol.js, or it's few lines of code, in your project.
 API
 ============
 
-Register the store in central dispatch, where store is a riot.observable(). Generally, all stores should be created and registered before the Riot app is mounted.
+Register the store in central dispatch, where store is a `observable()`. Generally, all stores should be created and registered before the Riot app is mounted.
 
 ```javascript
-riot-control.addStore(store)
+RiotControl.addStore(store)
 
 // Example, at start of application:
 var todoStore = new TodoStore() // Create a store instance.
-riot-control.addStore(todoStore) // Register the store in central dispatch.
+RiotControl.addStore(todoStore) // Register the store in central dispatch.
 ```
 
 Trigger event on all stores registered in central dispatch. Essentially, a 'broadcast' version of Riot's el.trigger() API.

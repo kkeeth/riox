@@ -1,50 +1,44 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>RiotControl Demo</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="todo.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="todo.css" />
 
     <!--[if lt IE 9]>
-    <script src="js/es5-shim.js"></script>
-    <script src="js/html5-shiv.js"></script>
-    <script>html5.addElements('todoapp')</script>
+      <script src="js/es5-shim.js"></script>
+      <script src="js/html5-shiv.js"></script>
+      <script>
+        html5.addElements('todoapp')
+      </script>
     <![endif]-->
-
   </head>
 
   <body>
-
     <item-app></item-app>
 
-    <script src="js/riot.js"></script>
-    <script src="riotcontrol.js"></script>
-    <script src="itemstore.js"></script>
-    <script src="item-detail.js"></script>
-    <script src="item-app.js"></script>
+    <script src="lib/riot+compiler.js"></script>
+    <script src="lib/route.js"></script>
+    <script src="lib/observable.js"></script>
+    <script src="js/riotcontrol.js"></script>
+    <script src="js/itemstore.js"></script>
+    <script src="components/item-app.riot" type="riot"></script>
+    <script src="components/item-detail.riot" type="riot"></script>
 
     <script>
-      var itemStore = new ItemStore()
+      const itemStore = new ItemStore()
       RiotControl.addStore(itemStore)
 
-      riot.mount('item-app') // Kickoff the Riot app.
-
-      // Define router function
-      var router = function(page,id) {
-        if (page == 'add')
-          RiotControl.trigger('route_item_add')
-        else
-          RiotControl.trigger('route_item', id)
-      }
-
-      // Riot router
-      riot.route(router)
-      // Execute router function once for rendering the items
-      riot.route.exec(router);
+      riot
+        .compile()
+        .then(() => {
+          riot.mount('item-app')
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     </script>
-
   </body>
-
 </html>

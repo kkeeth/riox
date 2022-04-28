@@ -1,8 +1,8 @@
 // Manages our item data locally, for now.
-function ItemStore() {  
-  riot.observable(this)
+function ItemStore() {
+  observable(this)
 
-  var self = this
+  const self = this
 
   // Could pull this from a server API.
   self.items = [
@@ -12,15 +12,16 @@ function ItemStore() {
   ]
 
   // Init our list view.
-  self.on('item_list_init', function() {
+  self.on('item_list_init', () => {
     self.trigger('item_list_changed', self.items)
   })
 
   // Search our item collection.
-  self.on('item_list_search', function(txt) {
-    var list = self.items
+  self.on('item_list_search', (txt) => {
+console.log(txt)
+    let list = self.items
     if (txt.length > 0)
-      list = self.items.filter(function(el) {
+      list = self.items.filter((el) => {
         if (el.title.toLowerCase().search(new RegExp(txt.toLowerCase())) == -1)
           return false
         else
@@ -32,15 +33,15 @@ function ItemStore() {
 
   // Add to our item collection.
   // Could push this to a server API.
-  self.on('item_detail_add', function(title) {
+  self.on('item_detail_add', (title) => {
     self.items.push({ id: self.items.length+1, title: title })
     self.trigger('item_list_changed', self.items)
   })
 
   // Pull item for URL route. (id)
-  self.on('route_item', function(id) {      
+  self.on('route_item', (id) => {
     var item = null
-    self.items.forEach(function(el) {
+    self.items.forEach((el) => {
       if (el.id == id)
         item = el
     })
@@ -48,7 +49,7 @@ function ItemStore() {
   })
 
   // Emit event for add item route.
-  self.on('route_item_add', function() {
+  self.on('route_item_add', () => {
     self.trigger('item_detail_create')
   })
 
