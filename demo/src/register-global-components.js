@@ -1,10 +1,15 @@
 import { register } from 'riot'
 
-const basename = (path, extension = '') => path.split('/').reverse()[0].replace(extension, '')
-const globalComponentsContext = require.context('./components/global/', true, /[a-zA-Z0-9-]+\.riot/)
+const basename = (path, extension = '') =>
+  path.split('/').reverse()[0].replace(extension, '')
+const globalComponentsContext = require.context(
+  './components/',
+  true,
+  /[a-zA-Z0-9-]+\.riot/,
+)
 
 export default () => {
-  globalComponentsContext.keys().map(path => {
+  globalComponentsContext.keys().map((path) => {
     const name = basename(path, '.riot')
 
     const component = globalComponentsContext(path)
@@ -13,7 +18,7 @@ export default () => {
 
     return {
       name,
-      component
+      component,
     }
   })
 }
