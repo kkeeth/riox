@@ -1,0 +1,30 @@
+body {
+  font-family: 'myriad pro', sans-serif;
+  font-size: 20px;
+  border: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+main {
+  margin: 5% auto;
+}
+
+.bit {
+  float: left;
+  max-width: 10px;
+  padding-right: 10px;
+  margin-top: 10px;
+  border: 1px solid;
+}
+
+.bit > span {
+  padding-left: 5px;
+}
+
+/*# sourceMappingURL=app.css.map*/
