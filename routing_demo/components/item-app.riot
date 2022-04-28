@@ -5,23 +5,19 @@
   <div if={ !state.edit }>
     <span>Search:</span>
     <br/>
-    <input name='input' onkeyup={ search } />
-    <form onsubmit={ clear }>
-      <button disabled={ !txt }>Clear</button>
-    </form>
+    <input name='input' value={ state.txt } onkeyup={ search } />
+    <button onclick={ clear } disabled={ !state.txt }>Clear</button>
     <router base={ base }>
       <ul>
         <li each={ item in state.items }>
           <a href={ `view/${item.id}` }>{ item.title }</a>
         </li>
       </ul>
+      <hr />
 
-      <route path="/:id">
+      <route path="/:id" if={ state.detail }>
         <p>{ getText(route) }</p>
         <item-detail item={ state.detail } />
-      </route>
-      <route path="(.*)">
-        <p>{ getText(route) }</p>
       </route>
     </router>
     <div if={ !state.detail }>
@@ -53,38 +49,47 @@
       },
       onBeforeMount(props, state) {
         RiotControl.on('item_list_changed', (items) => {
-          state.items = items
-          this.update()
+          this.update({
+            items: items
+          })
         })
 
         RiotControl.on('item_detail_changed', (item) => {
-          state.edit = false
-          state.detail = item
-          riot.update()
+          this.update({
+            edit: false,
+            detail: item
+          })
         })
 
         RiotControl.on('item_detail_create', () => {
-          state.edit = true
-          this.update()
+          this.update({
+            edit: true
+          })
         })
       },
       onMounted() {
         RiotControl.trigger('item_list_init')
       },
+      onAnyRoute(path) {
+        console.log("＼( 'ω')／ウオオオオオアアアーーーッ！")
+        console.log(path)
+      },
       getText(route) {
-        console.log(route)
         return "route"
       },
       add(e) {
-        route('add')
+        route.route('add')
       },
       search(e) {
-        this.state.txt = e.target.value
+        this.update({
+          txt: e.target.value
+        })
         RiotControl.trigger('item_list_search', this.state.txt)
       },
       clear(e) {
-        this.state.txt = ''
-        this.input.value = ''
+        this.update({
+          txt: ''
+        })
         RiotControl.trigger('item_list_search','')
       },
       submit(e) {
@@ -95,8 +100,6 @@
         route('view')
       },
       cancel(e) {
-        // console.log(this.$('input'))
-        // this.title.value = ''
         this.state.edit = false
         route('view')
       }

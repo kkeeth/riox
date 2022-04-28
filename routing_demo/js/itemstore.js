@@ -8,7 +8,7 @@ function ItemStore() {
   self.items = [
     { id: 1, title: 'Foobar' },
     { id: 2, title: 'Foobaz' },
-    { id: 3, title: 'Barbar' }
+    { id: 3, title: 'Barbar' },
   ]
 
   // Init our list view.
@@ -18,14 +18,12 @@ function ItemStore() {
 
   // Search our item collection.
   self.on('item_list_search', (txt) => {
-console.log(txt)
     let list = self.items
     if (txt.length > 0)
       list = self.items.filter((el) => {
         if (el.title.toLowerCase().search(new RegExp(txt.toLowerCase())) == -1)
           return false
-        else
-          return true
+        else return true
       })
 
     self.trigger('item_list_changed', list)
@@ -34,7 +32,7 @@ console.log(txt)
   // Add to our item collection.
   // Could push this to a server API.
   self.on('item_detail_add', (title) => {
-    self.items.push({ id: self.items.length+1, title: title })
+    self.items.push({ id: self.items.length + 1, title: title })
     self.trigger('item_list_changed', self.items)
   })
 
@@ -42,8 +40,7 @@ console.log(txt)
   self.on('route_item', (id) => {
     var item = null
     self.items.forEach((el) => {
-      if (el.id == id)
-        item = el
+      if (el.id == id) item = el
     })
     self.trigger('item_detail_changed', item)
   })
@@ -52,5 +49,4 @@ console.log(txt)
   self.on('route_item_add', () => {
     self.trigger('item_detail_create')
   })
-
 }
