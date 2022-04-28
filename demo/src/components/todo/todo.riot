@@ -31,10 +31,13 @@
         text: ""
       },
       onBeforeMount(props, state) {
+        // Register the store in central dispatch.
+        RiotControl.addStore(this.store)
         // Register a listener for store change events.
         RiotControl.on('todos_changed', (items) => {
-          state.items = items
-          this.update()
+          this.update({
+            items: items
+          })
         })
       },
       onMounted() {

@@ -3,10 +3,10 @@ import { install } from 'riot'
 // TodoStore definition.
 // Flux stores house application logic and state that relate to a specific domain.
 // In this case, a list of todo items.
-const TodoStore = () => {
-  const self = this
-
+function TodoStore() {
   observable(this) // Riot provides our event emitter.
+
+  const self = this
 
   self.todos = [
     { title: 'Task 1', done: false },
@@ -31,12 +31,12 @@ const TodoStore = () => {
   self.on('todo_init', () => {
     self.trigger('todos_changed', self.todos)
   })
-
   // The store emits change events to any listening views, so that they may react and redraw themselves.
 }
+
 install((componentAPI) => {
   const component = observable(componentAPI)
 
-  component.store = TodoStore()
+  component.store = new TodoStore()
   return component
 })
