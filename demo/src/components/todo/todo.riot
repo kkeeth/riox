@@ -19,7 +19,7 @@
     <input name="input" onkeyup={ edit }>
     <button disabled={ !state.text }>Add #{ state.items.length + 1 }</button>
   </form>
-  <button disabled={ !state.items.length } onclick={ remove }>Remove</button>
+  <button disabled={ !state.items.length } onclick={ remove } class="danger">Remove</button>
 
   <script>
     import RiotControl from '../../libs/riotcontrol'

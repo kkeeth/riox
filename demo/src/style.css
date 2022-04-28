@@ -45,6 +45,18 @@ button {
   outline: none;
 }
 
+button.danger {
+  background-color: #fff;
+  color: #CB2431;
+  margin-top: .6rem;
+  margin-left: .6rem;
+}
+
+button.danger:hover {
+  background-color: #CB2431;
+  color: #fff;
+}
+
 button[disabled] {
   background-color: #ddd;
   color: #aaa;
