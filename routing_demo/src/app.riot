@@ -33,6 +33,7 @@
   <script>
     import { Router, Route, route, toRegexp, match } from '@riotjs/route'
     import lazy from '@riotjs/lazy'
+    import Loader from './components/loader.riot'
     import NotFound from './pages/not-found.riot'
     import pages from './pages'
 
@@ -41,13 +42,13 @@
         Router,
         Route,
         NotFound,
-        Home: lazy(Loader, () => import(
-          /* webpackPrefetch: true, webpackChunkName: 'pages/home' */
-          './pages/home.riot'
+        ItemApp: lazy(Loader, () => import(
+          /* webpackPrefetch: true, webpackChunkName: 'pages/item-app' */
+          './pages/item-app.riot'
         )),
-        About: lazy(Loader, () => import(
-          /* webpackPrefetch: true, webpackChunkName: 'pages/about' */
-          './pages/about.riot'
+        ItemDetail: lazy(Loader, () => import(
+          /* webpackPrefetch: true, webpackChunkName: 'pages/views/:id' */
+          './pages/item-detail.riot'
         )),
       },
       state: {
