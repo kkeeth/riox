@@ -9,7 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
-    clean: true
+    clean: true,
   },
   devtool: 'source-map',
   optimization: {
@@ -42,27 +42,39 @@ module.exports = {
     hot: true,
     open: true,
     historyApiFallback: {
-      index: 'index.html'
-    }
+      index: 'index.html',
+    },
   },
   module: {
     rules: [
       {
         test: /\.riot$/,
         exclude: /node_modules/,
-        use: [{
-          loader: '@riotjs/webpack-loader',
-          options: {
-            hot: true
-          }
-        }]
-      }
-    ]
+        use: [
+          {
+            loader: '@riotjs/webpack-loader',
+            options: {
+              hot: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: { url: false },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
+      template: './index.html',
     }),
     new webpack.HotModuleReplacementPlugin(),
-  ]
+  ],
 }

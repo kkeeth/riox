@@ -1,44 +1,11 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>RiotControl Demo</title>
+    <title>RiotControl Routing Demo</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="todo.css" />
-
-    <!--[if lt IE 9]>
-      <script src="js/es5-shim.js"></script>
-      <script src="js/html5-shiv.js"></script>
-      <script>
-        html5.addElements('todoapp')
-      </script>
-    <![endif]-->
   </head>
-
   <body>
-    <item-app></item-app>
-
-    <script src="lib/riot+compiler.js"></script>
-    <script src="lib/route.js"></script>
-    <script src="lib/observable.js"></script>
-    <script src="js/riotcontrol.js"></script>
-    <script src="js/itemstore.js"></script>
-    <script src="components/item-app.riot" type="riot"></script>
-    <script src="components/item-detail.riot" type="riot"></script>
-
-    <script>
-      const itemStore = new ItemStore()
-      RiotControl.addStore(itemStore)
-
-      riot
-        .compile()
-        .then(() => {
-          riot.mount('item-app')
-        })
-        .catch((e) => {
-          console.log(e)
-        })
-    </script>
+    <div id="root"></div>
   </body>
 </html>
