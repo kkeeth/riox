@@ -93,12 +93,6 @@
             detail: item
           })
         })
-
-        RiotControl.on('item_detail_create', () => {
-          this.update({
-            edit: true
-          })
-        })
       },
       onAnyRoute(path) {
         // show the not found page if none of the page paths are matched
@@ -123,6 +117,7 @@
         router.push('')
       },
       cancel() {
+        RiotControl.trigger('route_item', null)
         router.push('')
       },
     }

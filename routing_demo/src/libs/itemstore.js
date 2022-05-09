@@ -46,11 +46,6 @@ function ItemStore() {
     })
     self.trigger('item_detail_changed', item)
   })
-
-  // Emit event for add item route.
-  self.on('route_item_add', () => {
-    self.trigger('item_detail_create')
-  })
 }
 
 export default ItemStore
