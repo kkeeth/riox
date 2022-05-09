@@ -21,9 +21,10 @@
   "keywords": [
     "riotjs",
     "routing",
+    "store",
     "demo"
   ],
-  "author": "k-kuwahara <zensin0082@gmail.com>",
+  "author": "kkeeth <zensin0082@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/kkeeth/RiotControl/issues"
