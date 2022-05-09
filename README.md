@@ -120,7 +120,7 @@ RiotControl.one(event, callback)
 
 ## License
 
-[MIT](https://github.com/kkeeth/riot-control/blob/master/LICENSE)
+[MIT](https://github.com/kkeeth/RiotControl/blob/master/LICENSE)
 
 ## Others
 
