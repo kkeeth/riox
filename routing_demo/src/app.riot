@@ -19,8 +19,8 @@
       </div>
 
       <!-- for Item Detail -->
-      <item-detail if={ state.detail.id } item={ state.detail } />
-      <div if={ !state.detail.id }>
+      <item-detail if={ !!state.detail } item={ state.detail } />
+      <div if={ !state.detail }>
         <p>Choose a product.</p>
       </div>
 
@@ -72,15 +72,12 @@
       state: {
         pages,
         showNotFound: false,
-        detail: {
-          id: null,
-          title: '',
-        },
+        detail: null,
         activePage: null,
         edit: false,
       },
       onBeforeMount({ isServer }) {
-        setBase('/')
+        setBase(`${window.location.protocol}//${window.location.host}`)
         initDomListeners(document.querySelector('#root'))
 
         const itemStore = new ItemStore()
@@ -102,52 +99,32 @@
             edit: true
           })
         })
-
       },
       onAnyRoute(path) {
         // show the not found page if none of the page paths are matched
         const activePage = pages.find(p => match(path.params[0], toRegexp(p.path)))
-        const detailId = path.params[0].split('/').pop() || null
-        RiotControl.trigger('route_item', detailId)
+        const detailId = path.params[0].split('/').pop()
+        if (activePage.label === "ItemDetail") RiotControl.trigger('route_item', detailId)
 
         this.update({
           activePage,
           showNotFound: !activePage,
+          edit: activePage.label === 'AddItem',
         })
       },
-      // if I will use this code
-      // getItem({ params }) {
-      //   const items = RiotControl._stores[0].items
-      //   return items.find(item => item.id === Number(params.id))
-      // },
-      // getParams(route) {
-      //   console.log(route)
-      //   this.update({
-      //     parmas: route.params
-      //   })
-      // },
       onBeforeUnmount() {
         this.anyRouteStream.end()
       },
       add() {
         router.push('/#add')
-        this.update({
-          edit: true
-        })
       },
       addItem(item) {
         RiotControl.trigger('item_detail_add', item)
-        this.update({
-          edit: false
-        })
         router.push('')
       },
       cancel() {
-        this.update({
-          edit:false
-        })
         router.push('')
-      }
+      },
     }
   </script>
 </app>

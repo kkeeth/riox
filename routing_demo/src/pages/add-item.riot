@@ -2,7 +2,7 @@
   <div class="add-item">
     <h3>Add New Item</h3>
     <form onsubmit={ submit }>
-      <input name='title' onkeyup={ edit }>
+      <input name='title' onkeyup={ input }>
       <button disabled={ !state.input }>Submit</button>
     </form>
     <button onclick={ cancel }>Cancel</button>
@@ -16,7 +16,7 @@
       state: {
         input: ''
       },
-      edit(e) {
+      input(e) {
         this.update({
           input: e.target.value
         })
