@@ -1,5 +1,3 @@
-# 🚧 This repo is currently being updated 🚧
-
 # RiotControl
 
 ============
@@ -64,7 +62,7 @@ $ npm install riotcontrol
 
 # API
 
-Register the store in central dispatch, where store is a `observable()`. Generally, all stores should be created and registered before the Riot app is mounted.
+Register the store in central dispatch, where store is a `observable()` method of `@riotjs/observable`. Generally, all stores should be created and registered before the Riot app is mounted.
 
 ```javascript
 // Base usage
