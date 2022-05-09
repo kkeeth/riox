@@ -1,0 +1,62 @@
+<item-list>
+    <p>Search:</p>
+    <input name='input' value={ state.txt } onkeyup={ search } />
+    <button onclick={ clear } disabled={ !state.txt }>Clear</button>
+    <div>
+      <ul>
+        <li each={ item in state.items }>
+          <a href={ `/#view/${item.id}` }>{ item.title }</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    import { router } from '@riotjs/route'
+    import RiotControl from 'riotcontrol'
+    import ItemDetail from './item-detail.riot'
+    import AddItem from './item-detail.riot'
+
+    // This is essentially the equivalent of the Flux view-controller.
+    // Could be broken down further into more sub-componenets, if you wished to re-use views.
+    export default {
+      state: {
+        items: [],
+        txt: null,
+      },
+      componenets: {
+        ItemDetail,
+        AddItem,
+      },
+      onBeforeMount(props, state) {
+        RiotControl.on('item_list_changed', (items) => {
+          this.update({
+            items: items
+          })
+        })
+      },
+      onMounted() {
+        RiotControl.trigger('item_list_init')
+      },
+      search(e) {
+        this.update({
+          txt: e.target.value
+        })
+        RiotControl.trigger('item_list_search', this.state.txt)
+      },
+      clear(e) {
+        this.update({
+          txt: ''
+        })
+        RiotControl.trigger('item_list_search','')
+      },
+      getItemDetail(id) {
+        return {
+          id: id,
+
+        }
+      }
+    }
+  </script>
+
+</item-list>

@@ -1,0 +1,34 @@
+<add-item>
+  <div class="add-item">
+    <h3>Add New Item</h3>
+    <form onsubmit={ submit }>
+      <input name='title' onkeyup={ edit }>
+      <button disabled={ !state.input }>Submit</button>
+    </form>
+    <button onclick={ cancel }>Cancel</button>
+  </div>
+
+  <script>
+    import RiotControl from 'riotcontrol'
+    import { router } from '@riotjs/route'
+
+    export default {
+      state: {
+        input: ''
+      },
+      edit(e) {
+        this.update({
+          input: e.target.value
+        })
+      },
+      submit(e) {
+        e.preventDefault()
+        e.target.title.value = ''
+        this.props.addItem(this.state.input)
+      },
+      cancel(e) {
+        this.props.cancel()
+      },
+    }
+  </script>
+</add-item>

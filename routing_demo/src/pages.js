@@ -1,12 +1,17 @@
 export default [
   {
-    path: '/',
-    label: 'Home',
+    path: '',
+    label: 'ItemApp',
     componentName: 'item-app',
   },
   {
-    path: '/view/:id',
-    label: 'Detail',
+    path: '/#view/(.*)',
+    label: 'ItemDetail',
     componentName: 'item-detail',
+  },
+  {
+    path: '/#add',
+    label: 'AddItem',
+    componentName: 'add-item',
   },
 ]

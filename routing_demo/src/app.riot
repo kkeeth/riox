@@ -1,102 +1,153 @@
 <app>
   <div class="container">
-    <router>
-      <div class="row">
-        <nav class="menu column">
-          <a
-            each={page in state.pages}
-            class={state.activePage === page ? 'active' : '' }
-            href={page.path}>
-            {page.label}
-          </a>
-        </nav>
+    <h3>Gadget Browser <a href="https://github.com/kkeeth/riot-control">(GitHub)</a></h3>
+    <p>Notice the URL routing, back button works as expected.</p>
+
+    <!-- for 404 -->
+    <div if={ state.showNotFound } class="row">
+      <div>
+        <not-found />
       </div>
-      <div if={state.showNotFound} class="row">
-        <div class="column column-60">
-          <not-found />
+    </div>
+
+    <div if={ !state.edit }>
+      <!-- for Item List -->
+      <div if={ !state.showNotFound } class="row">
+        <div>
+          <item-list edit={ state.edit } />
         </div>
       </div>
-      <div if={!state.showNotFound} class="row">
-        <div class="column column-60">
-          <route each={page in state.pages} path={page.path}>
-            <main is={page.componentName}/>
-          </route>
-        </div>
-        <!-- notice how <sidebar> is registered as global component -->
-        <div class="column column-40">
-          <sidebar/>
-        </div>
+
+      <!-- for Item Detail -->
+      <item-detail if={ state.detail.id } item={ state.detail } />
+      <div if={ !state.detail.id }>
+        <p>Choose a product.</p>
       </div>
-    </router>
+
+      <!-- add button -->
+      <div>
+        <button onclick={ add }>Add</button>
+      </div>
+    </div>
+    <div if={ state.edit }>
+      <add-item add-item={ addItem } cancel={ cancel } />
+    </div>
   </div>
 
   <script>
-    import { Router, Route, route, toRegexp, match } from '@riotjs/route'
+    import {
+      route,
+      router,
+      toRegexp,
+      match,
+      setBase,
+      initDomListeners,
+    } from '@riotjs/route'
     import lazy from '@riotjs/lazy'
+    import RiotControl from 'riotcontrol'
     import Loader from './components/loader.riot'
     import NotFound from './pages/not-found.riot'
     import pages from './pages'
+    import ItemStore from './libs/itemstore'
 
     export default {
       components: {
-        Router,
-        Route,
+        pages,
+        // Route,
+        // Router,
         NotFound,
-        ItemApp: lazy(Loader, () => import(
+        ItemList: lazy(Loader, () => import(
           /* webpackPrefetch: true, webpackChunkName: 'pages/item-app' */
-          './pages/item-app.riot'
+          './pages/item-list.riot'
         )),
         ItemDetail: lazy(Loader, () => import(
-          /* webpackPrefetch: true, webpackChunkName: 'pages/views/:id' */
+          /* webpackPrefetch: true, webpackChunkName: 'pages/item-app' */
           './pages/item-detail.riot'
+        )),
+        AddItem: lazy(Loader, () => import(
+          /* webpackPrefetch: true, webpackChunkName: 'pages/add-item' */
+          './pages/add-item.riot'
         )),
       },
       state: {
         pages,
         showNotFound: false,
-        activePage: null
+        detail: {
+          id: null,
+          title: '',
+        },
+        activePage: null,
+        edit: false,
       },
       onBeforeMount({ isServer }) {
+        setBase('/')
+        initDomListeners(document.querySelector('#root'))
+
+        const itemStore = new ItemStore()
+        RiotControl.addStore(itemStore)
+
         // create a stream on all routes to catch the not-found page
         this.anyRouteStream = route('(.*)')
         this.anyRouteStream.on.value(this.onAnyRoute)
+
+        RiotControl.on('item_detail_changed', (item) => {
+          this.update({
+            edit: false,
+            detail: item
+          })
+        })
+
+        RiotControl.on('item_detail_create', () => {
+          this.update({
+            edit: true
+          })
+        })
+
       },
       onAnyRoute(path) {
         // show the not found page if none of the page paths are matched
-        const activePage = pages.find(p => match(path.pathname, toRegexp(p.path)))
+        const activePage = pages.find(p => match(path.params[0], toRegexp(p.path)))
+        const detailId = path.params[0].split('/').pop() || null
+        RiotControl.trigger('route_item', detailId)
 
         this.update({
           activePage,
-          showNotFound: !activePage
+          showNotFound: !activePage,
         })
       },
+      // if I will use this code
+      // getItem({ params }) {
+      //   const items = RiotControl._stores[0].items
+      //   return items.find(item => item.id === Number(params.id))
+      // },
+      // getParams(route) {
+      //   console.log(route)
+      //   this.update({
+      //     parmas: route.params
+      //   })
+      // },
       onBeforeUnmount() {
         this.anyRouteStream.end()
+      },
+      add() {
+        router.push('/#add')
+        this.update({
+          edit: true
+        })
+      },
+      addItem(item) {
+        RiotControl.trigger('item_detail_add', item)
+        this.update({
+          edit: false
+        })
+        router.push('')
+      },
+      cancel() {
+        this.update({
+          edit:false
+        })
+        router.push('')
       }
     }
   </script>
-
-  <style>
-    :host {
-      padding: 2rem 0;
-    }
-
-    .menu {
-      margin: 1rem -1rem;
-    }
-
-    .menu a {
-      padding: 0 1rem;
-      color: black;
-    }
-
-    .menu a.active.active {
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .menu a:hover, .menu a:focus, .menu a:active {
-      text-decoration: underline;
-    }
-  </style>
 </app>

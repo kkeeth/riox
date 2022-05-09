@@ -40,7 +40,7 @@ function ItemStore() {
 
   // Pull item for URL route. (id)
   self.on('route_item', (id) => {
-    const item = null
+    let item = null
     self.items.forEach((el) => {
       if (el.id == id) item = el
     })

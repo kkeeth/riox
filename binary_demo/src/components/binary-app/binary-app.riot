@@ -28,7 +28,6 @@
 				RiotControl.addStore(calcStore)
 
 				RiotControl.on('binary_changed', (bitlist) => {
-					console.log(bitlist)
 					this.update({
 						bitlist: bitlist
 					})
@@ -44,7 +43,6 @@
 				RiotControl.trigger('hex_changed', e.target.value)
 			},
 			toggle(e) {
-				console.log(e)
 				RiotControl.trigger('bit_changed', e.item.pos)
 			}
 		}

@@ -43,6 +43,7 @@ module.exports = {
     open: true,
     historyApiFallback: {
       index: 'index.html',
+      add: 'index.html',
     },
   },
   module: {

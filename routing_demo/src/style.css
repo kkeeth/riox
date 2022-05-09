@@ -2,11 +2,27 @@ body {
   font-family: 'myriad pro', sans-serif;
   font-size: 20px;
   border: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  flex-direction: column;
+  padding: 0 2rem;
+  max-width: 500px;
 }
 
 a {
   text-decoration: none;
   color: grey;
+}
+
+p {
+  margin: .8rem 0;
+}
+
+h3 {
+  margin: 1rem auto;
 }
 
 item-app {
@@ -31,7 +47,7 @@ button {
   padding: .6em 1.2em;
   border-radius: 3em;
   cursor: pointer;
-  margin: 0 .3em;
+  margin: .3em;
   outline: none;
 }
 
