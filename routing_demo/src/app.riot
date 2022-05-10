@@ -44,7 +44,7 @@
       initDomListeners,
     } from '@riotjs/route'
     import lazy from '@riotjs/lazy'
-    import RiotControl from 'riotcontrol'
+    import riox from './libs/riox'
     import Loader from './components/loader.riot'
     import NotFound from './pages/not-found.riot'
     import pages from './pages'
@@ -81,13 +81,13 @@
         initDomListeners(document.querySelector('#root'))
 
         const itemStore = new ItemStore()
-        RiotControl.addStore(itemStore)
+        riox.addStore(itemStore)
 
         // create a stream on all routes to catch the not-found page
         this.anyRouteStream = route('(.*)')
         this.anyRouteStream.on.value(this.onAnyRoute)
 
-        RiotControl.on('item_detail_changed', (item) => {
+        riox.on('item_detail_changed', (item) => {
           this.update({
             edit: false,
             detail: item
@@ -98,7 +98,7 @@
         // show the not found page if none of the page paths are matched
         const activePage = pages.find(p => match(path.params[0], toRegexp(p.path)))
         const detailId = path.params[0].split('/').pop()
-        if (activePage.label === "ItemDetail") RiotControl.trigger('route_item', detailId)
+        if (activePage.label === "ItemDetail") riox.trigger('route_item', detailId)
 
         this.update({
           activePage,
@@ -113,11 +113,11 @@
         router.push('/#add')
       },
       addItem(item) {
-        RiotControl.trigger('item_detail_add', item)
+        riox.trigger('item_detail_add', item)
         router.push('')
       },
       cancel() {
-        RiotControl.trigger('route_item', null)
+        riox.trigger('route_item', null)
         router.push('')
       },
     }

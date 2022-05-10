@@ -22,7 +22,8 @@
     "riotjs",
     "routing",
     "store",
-    "demo"
+    "demo",
+    "riox"
   ],
   "author": "kkeeth <zensin0082@gmail.com>",
   "license": "MIT",
@@ -52,7 +53,6 @@
     "@riotjs/lazy": "^2.0.1",
     "@riotjs/observable": "^4.1.1",
     "@riotjs/route": "^8.0.0",
-    "riot": "^6.0.2",
-    "riotcontrol": "^0.0.3"
+    "riot": "^6.0.2"
   }
 }

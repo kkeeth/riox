@@ -70,7 +70,7 @@ RiotControl.addStore(store)
 
 // Example, at start of any components:
 import MyStore from './path/to/store/dir/my-store'
-import RiotControl from 'riotcontrol'
+import riox from 'riox'
 
 onBeforeMount(props, state) {
   // Create store instance

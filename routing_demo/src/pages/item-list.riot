@@ -13,7 +13,7 @@
 
   <script>
     import { router } from '@riotjs/route'
-    import RiotControl from 'riotcontrol'
+    import riox from '../libs/riox'
     import ItemDetail from './item-detail.riot'
     import AddItem from './item-detail.riot'
 
@@ -29,26 +29,26 @@
         AddItem,
       },
       onBeforeMount(props, state) {
-        RiotControl.on('item_list_changed', (items) => {
+        riox.on('item_list_changed', (items) => {
           this.update({
             items: items
           })
         })
       },
       onMounted() {
-        RiotControl.trigger('item_list_init')
+        riox.trigger('item_list_init')
       },
       search(e) {
         this.update({
           txt: e.target.value
         })
-        RiotControl.trigger('item_list_search', this.state.txt)
+        riox.trigger('item_list_search', this.state.txt)
       },
       clear(e) {
         this.update({
           txt: ''
         })
-        RiotControl.trigger('item_list_search','')
+        riox.trigger('item_list_search','')
       },
     }
   </script>
