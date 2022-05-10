@@ -19,7 +19,10 @@ function TodoStore() {
   // This store can easily be swapped for another, while the view components remain untouched.
 
   self.on('todo_add', (newTodo) => {
-    self.todos.push(newTodo)
+    self.todos.push({
+      title: newTodo,
+      done: false,
+    })
     self.trigger('todos_changed', self.todos)
   })
 

@@ -1,7 +1,7 @@
 {
   "name": "demo",
   "version": "1.0.0",
-  "description": "riotjs with riot-control",
+  "description": "riotjs demo app with riox",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -21,6 +21,7 @@
   "keywords": [
     "riotjs",
     "RiotControl",
+    "riox",
     "store",
     "demo"
   ],
@@ -52,7 +53,6 @@
     "@riotjs/lazy": "^2.0.1",
     "@riotjs/observable": "^4.1.1",
     "@riotjs/route": "^8.0.0",
-    "riot": "^6.0.2",
-    "riotcontrol": "^0.0.3"
+    "riot": "^6.0.2"
   }
 }

@@ -1,23 +1,22 @@
 <binary-app>
 	<h3>Binary Calculator</h3>
-	<span>Enter hex:</span>
-	<br/>
-	<span>0x</span>
-	<input name="input" onkeyup={ hexChanged } />
-	<span each={ bit in state.bitlist }>
-		{ bit.value }
-	</span>
-	<br/>
 	<div>
-		<div class="bit" each={ bit in state.bitlist } onclick={ toggle }>
-			<span>{ bit.pos }</span>
-			<input type="checkbox" checked={ !!bit.value } />
-		</div>
+		<span>Enter hex:</span>
+		<span>0x</span>
+		<input name="input" onkeyup={ hexChanged } />
+		<br />
+		<span each={ bit in state.bitlist }>
+			{ bit.value }
+		</span>
+	</div>
+	<div class="bit" each={ bit in state.bitlist } onclick={ toggle }>
+		<span>{ bit.pos }</span>
+		<input type="checkbox" checked={ !!bit.value } />
 	</div>
 
 	<script>
 		import CalcStore from '../../libs/calcstore'
-    import riox from 'riox'
+    import riox from '../../libs/riox'
 
 	  export default {
 			state: {
@@ -25,25 +24,23 @@
 			},
       onBeforeMount(props, state) {
 				const calcStore = new CalcStore()
-				RiotControl.addStore(calcStore)
+				riox.addStore(calcStore)
 
-				RiotControl.on('binary_changed', (bitlist) => {
+				riox.on('binary_changed', (bitlist) => {
 					this.update({
 						bitlist: bitlist
 					})
 				})
 
-				RiotControl.on('hex_forced_change', (hexVal) => {
-					this.input.value = hexVal.toUpperCase()
-					RiotControl.trigger('hex_changed', this.input.value)
+				riox.on('hex_forced_change', (hexVal) => {
+					riox.trigger('hex_changed', hexVal.toUpperCase())
 				})
 			},
 			hexChanged(e) {
-				e.target.value = e.target.value.toUpperCase()
-				RiotControl.trigger('hex_changed', e.target.value)
+				riox.trigger('hex_changed', e.target.value.toUpperCase())
 			},
 			toggle(e) {
-				RiotControl.trigger('bit_changed', e.item.pos)
+				riox.trigger('bit_changed', e.item.pos)
 			}
 		}
 	</script>

@@ -4917,11 +4917,6 @@ riot@^6.0.2:
     cumpa "^1.0.1"
     curri "^1.0.1"
 
-riotcontrol@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/riotcontrol/-/riotcontrol-0.0.3.tgz#8b3d7c93002964a331d7f7bbd8490f167eca9eb2"
-  integrity sha1-iz18kwApZKMx1/e72EkPFn7KnrI=
-
 ruit@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/ruit/-/ruit-1.0.4.tgz#4cb4bae698e611003fa7726a6ab098f19964cf97"

@@ -1,5 +1,5 @@
 <todo>
-  <h3>RiotControl ToDo Demo</h3>
+  <h3>Riox ToDo Demo</h3>
 	<span>A Simplistic Central Event Controller / Dispatcher For RiotJS, Inspired By Flux</span>
   <hr />
 
@@ -23,7 +23,7 @@
 
   <script>
     import TodoStore from '../../libs/todostore'
-    import riox from 'riox'
+    import riox from '../../libs/riox'
 
     export default {
       state: {
@@ -35,9 +35,9 @@
         // Create store instance
         const todoStore = new TodoStore()
         // Register the store in central dispatch.
-        RiotControl.addStore(todoStore)
+        riox.addStore(todoStore)
         // Register a listener for store change events.
-        RiotControl.on('todos_changed', (items) => {
+        riox.on('todos_changed', (items) => {
           this.update({
             items: items
           })
@@ -46,7 +46,7 @@
       onMounted() {
         // Trigger init event when component is mounted to page.
         // Any store could respond to this.
-        RiotControl.trigger('todo_init')
+        riox.trigger('todo_init')
       },
       edit(e) {
         this.update({
@@ -60,7 +60,10 @@
           // Trigger event to all stores registered in central dispatch.
           // This allows loosely coupled stores/components to react to same events.
           e.target.input.value = ''
-          RiotControl.trigger('todo_add', { title: this.state.text })
+          riox.trigger('todo_add', this.state.text)
+          this.update({
+            text: ''
+          })
         }
       },
       toggle(e) {
@@ -68,7 +71,7 @@
         this.update()
       },
       remove(e) {
-        RiotControl.trigger('todo_remove')
+        riox.trigger('todo_remove')
       }
     }
   </script>
