@@ -1,6 +1,6 @@
 {
   "name": "riox",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Event Controller / Dispatcher For RiotJS, Inspired By Flux and RiotControl",
   "main": "riox.js",
   "files": [
