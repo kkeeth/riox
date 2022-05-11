@@ -1,22 +1,34 @@
-/* riox v0.0.1, @license MIT */
+/* riox v0.0.2, @license MIT */
 const _rioxApi = ['on', 'off', 'trigger']
+const DEFAULT_NAME = 'default'
 
 const riox = {
   _stores: [],
-  addStore: function (store) {
-    this._stores.push(store)
+  addStore: function (store, name) {
+    name = name || DEFAULT_NAME
+    this._stores[name] = store
   },
-  reset: function () {
+  reset: function (name) {
+    this._stores[name] = []
+  },
+  resetAll: () => {
     this._stores = []
+  },
+  getStore: function (key) {
+    key = key || DEFAULT_NAME
+    return this._stores[key]
+  },
+  getStoreAll: function () {
+    return this._stores
   },
 }
 
 _rioxApi.forEach(function (api) {
   riox[api] = function () {
-    var args = [].slice.call(arguments)
-    this._stores.forEach(function (el) {
-      el[api].apply(el, args)
-    })
+    const args = [].slice.call(arguments)
+    for (const [_key, store] of Object.entries(this._stores)) {
+      store[api].apply(store, args)
+    }
   }
 })
 
