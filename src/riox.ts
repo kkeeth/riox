@@ -2,9 +2,7 @@ const _rioxApi: string[] = ['on', 'off', 'trigger']
 const DEFAULT_NAME: string = 'default'
 
 type Riox {
-  _stores: {
-    object[key: string]
-  }
+  _stores: object[key: string]
   addStore: (store: object, key?: string) => void
   reset: (key: string) => void
   resetAll: () => void
