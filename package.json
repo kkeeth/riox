@@ -8,7 +8,9 @@
     "README.md",
     "LICENSE.txt"
   ],
+  "types": "types/index.d.ts",
   "scripts": {
+    "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,5 +29,16 @@
   "bugs": {
     "url": "https://github.com/kkeeth/riox/issues"
   },
-  "homepage": "https://github.com/kkeeth/riox"
+  "homepage": "https://github.com/kkeeth/riox",
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.2",
+    "rollup": "^2.73.0",
+    "tslib": "^2.4.0",
+    "typescript": "^4.6.4"
+  }
 }
